@@ -7,15 +7,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
-public class MainWindow  {
+public class MainWindow extends Component {
     JFrame frame = new JFrame();
      public static JTextArea area = new JTextArea();
     JTextField number = new JTextField();
@@ -59,10 +59,7 @@ public class MainWindow  {
                         ArrayList a =  NumberCalculation.returnCollection(inputNumber);
                         ArrayList b =  NumberCalculation.returnCollection(generateNumber);
                         NumberCalculation.writeToFile(a,b);
-                        loadNumbersFromFile();
-
-
-
+                        loadFromFile();
 
 
 
@@ -94,7 +91,7 @@ public class MainWindow  {
         numbers.setFont(new Font("Verdana",Font.PLAIN,15));
         frame.add(numbers);
 
-        correct_numbers.setBounds(900,200,200,50);
+        correct_numbers.setBounds(950,200,200,50);
         correct_numbers.setFont(new Font("Verdana",Font.PLAIN,15));
         frame.add(correct_numbers);
 
@@ -112,16 +109,26 @@ public class MainWindow  {
     public static void main(String[] args) {
         new MainWindow();
     }
-    private static void loadNumbersFromFile() {
+    private void loadFromFile() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("numbers.txt"));
+            FileReader fileReader = new FileReader("numbers.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            StringBuilder stringBuilder = new StringBuilder();
             String line;
-            while ((line = reader.readLine()) != null) {
-                area.setText(line + "\n");
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(System.lineSeparator());
             }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+
+            
+            area.setText(stringBuilder.toString());
+
+            bufferedReader.close();
+            fileReader.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Ошибка при загрузке файла: ");
         }
     }
 
