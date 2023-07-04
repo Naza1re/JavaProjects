@@ -70,6 +70,15 @@ public class NumberCalculation {
         return list;
 
     }
+ public static void clearFile() {
+        try {
+            FileWriter fileWriter = new FileWriter("numbers.txt", false);
+            fileWriter.write("");
+            fileWriter.close();
+        } catch (IOException ex) {
+            System.out.println("Ошибка при очистке файла: " + ex.getMessage());
+        }
+    }
 
 
 
