@@ -53,6 +53,7 @@ public class MainWindow extends Component {
                     int inputNumber = Integer.parseInt(userInput);
                     if(inputNumber==generateNumber){
                         JOptionPane.showMessageDialog(frame, "Ты угадал это было число : "+inputNumber);
+                        NumberCalculation.clearFile();
                         System.exit(1);
                     }
                     else{
@@ -79,6 +80,7 @@ public class MainWindow extends Component {
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                NumberCalculation.clearFile();
                 System.exit(2);
             }
         });
